@@ -1,9 +1,10 @@
 import { ValidationErrorItem } from "joi";
-import Address from "../entities/Address";
+
 import { AppDataSource } from "../../database/dataSource";
 import addressSchemaValidation from "../validations/addressSchemaValidation";
 import { IAddressInput, IAddressOutput } from "../interfaces/IAddress";
 import { ErrorExtension } from "../utils/ErrorExtension";
+import { Address } from "../entities/Address";
 
 
 class AddressRepository {

@@ -7,10 +7,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import User from "./User";
+import { User } from "./User";
+
 
 @Entity("address")
-class Address {
+export class Address {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
@@ -37,4 +38,4 @@ class Address {
   users: User;
 }
 
-export default Address;
+

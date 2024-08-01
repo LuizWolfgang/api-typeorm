@@ -6,10 +6,11 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from "typeorm";
-import Address from "./Address";
+import { Address } from "./Address";
+
 
 @Entity("users")
-class User {
+export class User {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
@@ -34,8 +35,10 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => Address, (address) => address.users)
+  @OneToMany(() => Address, (address) => address.users, {
+    eager: true //como se fosse o find, garante que os dados sempre carregados de forma completa
+  })
   address: Address[];
 }
 
-export default User;
+
