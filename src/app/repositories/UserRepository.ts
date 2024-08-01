@@ -2,13 +2,14 @@
 import { ValidationErrorItem } from "joi";
 import { AppDataSource } from "../../database/dataSource";
 import { compare, hash } from "bcryptjs";
-import User from "../entities/User";
+
 import { ErrorExtension } from "../utils/ErrorExtension";
 import userSchemaValidation from "../validations/userSchemaValidation";
 import { IUserInput, IUserOutput } from "../interfaces/IUser";
 
 import { ILogin } from "../interfaces/ILogin";
 import Auth from "../utils/Auth";
+import { User } from "../entities/User";
 
 
 
@@ -19,6 +20,11 @@ export class UserRepository {
     static async getUsers(): Promise<IUserOutput[]> {
         //SELECT * FROM USERS;
         const users = await this.usersRepository.find();
+
+        //busca as relacoes de endereço
+        // const users = await this.usersRepository.find({
+        //     relations: { address: true}
+        // });
 
         return users.map(({ password, ...user }) => user);
     }

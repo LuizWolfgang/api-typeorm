@@ -1,7 +1,8 @@
 import { MigrationInterface } from "typeorm";
 import { AppDataSource } from "../dataSource";
-import User from "../../app/entities/User";
+
 import { userSeed } from "../UserSeed";
+import { User } from "../../app/entities/User";
 
 
 export class CreateSeedUsersTable1708455815303 implements MigrationInterface {
