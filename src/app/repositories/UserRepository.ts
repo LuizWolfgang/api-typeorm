@@ -2,12 +2,14 @@
 import { ValidationErrorItem } from "joi";
 import { AppDataSource } from "../../database/dataSource";
 import { compare, hash } from "bcryptjs";
-import { User } from "../entities/User";
+import User from "../entities/User";
 import { ErrorExtension } from "../utils/ErrorExtension";
 import userSchemaValidation from "../validations/userSchemaValidation";
 import { IUserInput, IUserOutput } from "../interfaces/IUser";
-import Auth from "../validations/Auth";
+
 import { ILogin } from "../interfaces/ILogin";
+import Auth from "../utils/Auth";
+
 
 
 
