@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { userRouter } from "../app/controllers/UserController";
+import addressRouter from "../app/controllers/AddressController";
 
-export const routers = Router();
+const routers = Router();
 
 routers.use("/users", userRouter);
+routers.use("/address", addressRouter);
 
+export default routers;

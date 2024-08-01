@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Auth from "../validations/Auth";
+import Auth from "../utils/Auth";
 
 
 export const authenticateMiddleware = (

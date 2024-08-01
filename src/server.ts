@@ -3,8 +3,9 @@ import "express-async-errors";
 import express from "express";
 import cors from "cors";
 import { AppDataSource } from "./database/dataSource";
-import { routers } from "./routes";
+
 import { httpErrorMiddleware } from "./app/middlewares/ErrorMiddleware";
+import routers from "./routes";
 
 
 AppDataSource.initialize().then(async () => {
