@@ -17,18 +17,29 @@ import { User } from "../entities/User";
 export class UserRepository {
     private static usersRepository = AppDataSource.getRepository(User);
 
-    static async getUsers(): Promise<IUserOutput[]> {
+    static async getUsers({
+        pageNumber,
+        itemsPerPage,
+        orderBy,
+        orderDirection,
+      }: {
+        pageNumber: number;
+        itemsPerPage: number;
+        orderBy: string;
+        orderDirection: "ASC" | "DESC";
+      }): Promise<IUserOutput[]> {
         //SELECT * FROM USERS;
-        const users = await this.usersRepository.find();
-
-        //busca as relacoes de endereço
-        // const users = await this.usersRepository.find({
-        //     relations: { address: true}
-        // });
-
+        const users = await this.usersRepository.find({
+          skip: (pageNumber - 1) * itemsPerPage,
+          take: itemsPerPage,
+          order: {
+            [orderBy]: orderDirection,
+          },
+        });
+    
         return users.map(({ password, ...user }) => user);
-    }
-
+      }
+    
     static async newUser(user: IUserInput): Promise<IUserOutput> {
         const { error } = userSchemaValidation.validate(user, {
             abortEarly: false, // mostrar todos os erros, nao somente um.
