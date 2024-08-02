@@ -32,6 +32,6 @@ class AddressController {
   }
 }
 
-const addressRouter = new AddressController().router;
+export const addressRouter = new AddressController().router;
 
-export default addressRouter;
+
