@@ -7,6 +7,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { Address } from "./Address";
+import { UserProject } from "./UserProject";
 
 
 @Entity("users")
@@ -39,6 +40,9 @@ export class User {
     eager: true //como se fosse o find, garante que os dados sempre carregados de forma completa
   })
   address: Address[];
+
+  @OneToMany(() => UserProject, (userProject) => userProject.users)
+  UserProject: UserProject;
 }
 
 
