@@ -4,6 +4,10 @@ import { UserProject } from "../entities/UserProject";
 import { IUserProjectOutput, IUserProjectInput } from "../interfaces/IUserProject";
 import { ErrorExtension } from "../utils/ErrorExtension";
 import userProjectSchemaValidation from "../validations/userProjectSchemaValidation";
+import { IProjectInput, IProjectOutput } from "../interfaces/IProject";
+import { IUserInput, IUserOutput } from "../interfaces/IUser";
+import { User } from "../entities/User";
+import { Project } from "../entities/Project";
 
 
 export class UserProjectRepository {
@@ -67,6 +71,45 @@ export class UserProjectRepository {
 
     return "UserProject removed!";
   }
+
+  // exemplo de transactions
+  static async createAll(data: {
+    user: IUserInput;
+    project: IProjectInput;
+    user_project: IUserProjectInput;
+  }): Promise<{
+    user: IUserOutput;
+    project: IProjectOutput;
+    user_project: IUserProjectOutput;
+  }> {
+    const queryRunner = AppDataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const user = await queryRunner.manager.save(User, data.user);
+      const project = await queryRunner.manager.save(Project, data.project);
+
+      //insere dados de varias entidades diferentes. 
+      const user_project = await queryRunner.manager.save(UserProject, {
+        hours_worked: data.user_project.hours_worked,
+        id_project: project.id,
+        id_user: user.id,
+      });
+
+      //criamos o usuario, projeto, e as horas trabalhdas de uma vez.
+      await queryRunner.commitTransaction();
+
+      return { user, project, user_project };
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
 }
+
 
 export default UserProjectRepository;
