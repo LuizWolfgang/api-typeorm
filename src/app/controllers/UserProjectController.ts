@@ -15,6 +15,7 @@ class UserProjectController {
     this.router.get("/:id", this.getUserProject);
     this.router.put("/:id", this.updateUserProject);
     this.router.delete("/:id", this.deleteUserProject);
+    this.router.post("/createall", this.createAll);
   }
 
   private async getAllUserProjects(req: Request, res: Response) {
@@ -49,6 +50,14 @@ class UserProjectController {
     const userProjectDeleted =
       await UserProjectRepository.removeUserProject(id);
     res.status(200).json({ message: userProjectDeleted });
+  }
+
+
+  private async createAll(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const userProjectCreated =
+      await UserProjectRepository.createAll(req.body);
+    res.status(200).json(userProjectCreated);
   }
 }
 

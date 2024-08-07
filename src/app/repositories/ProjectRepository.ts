@@ -10,7 +10,11 @@ export class ProjectRepository {
   private static projectRepository = AppDataSource.getRepository(Project);
 
   static async getProjects(): Promise<IProjectOutput[]> {
-    return this.projectRepository.find();
+    return this.projectRepository.find({
+      relations: {
+        UserProject: true
+      }
+    });
   }
 
   static async newProject(project: IProjectInput): Promise<IProjectOutput> {
