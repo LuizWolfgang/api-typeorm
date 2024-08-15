@@ -9,7 +9,7 @@ import { CreateProjectTable1722601830954 } from "./migrations/1722601830954-Crea
 import { CreateUserProjectTable1722601845655 } from "./migrations/1722601845655-CreateUserProjectTable"
 import { Project } from "../app/entities/Project"
 import { UserProject } from "../app/entities/UserProject"
-
+import { Profile } from "../app/entities/Profile"
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -33,3 +33,12 @@ export const AppDataSource = new DataSource({
 
 // TODO: sempre criar primeiro as tabelas sem chaves estrangeiras e sem relacionamentos.
 // caso isso nao seja feito ocorrerá um erro
+
+export const AppDataSourceMongoDB = new DataSource({
+    type: "mongodb",
+    host: "localhost",
+    port: 27017,
+    database: "test",
+    synchronize: true,
+    entities: [Profile],
+  });
